@@ -114,7 +114,57 @@ public class User {
             }
         }
         return false;
+    }
 
+    public boolean updatePassword(String newPassword) {
+
+        String cryptedPassword = encryptPassword(this.password);
+
+        String url = "jdbc:mysql://localhost/test-driven";
+        String log = "root";
+        String pass = "root";
+        ResultSet res;
+        ResultSetMetaData count;
+        Connection connexion = null;
+        Statement statement = null;
+        PreparedStatement prepare = null;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connexion = DriverManager.getConnection(url, log, pass);
+            statement = connexion.createStatement();
+            String request = "UPDATE user SET password = ? WHERE email = ?";
+            prepare = connexion.prepareStatement(request);
+            prepare.setString(1, cryptedPassword);
+            prepare.setString(2, this.email);
+            res = prepare.executeQuery();
+            res.next();
+            count = res.getMetaData();
+            if(count.getColumnCount() == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch(SQLException e) {
+            System.out.println();
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.out.println();
+            e.printStackTrace();
+        } finally {
+            try {
+                connexion.close();
+                prepare.close();
+                statement.close();
+            } catch (SQLException e) {
+                System.out.println();
+                e.printStackTrace();
+            } catch (NullPointerException e) {
+                System.out.println();
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
 
     public String toString() {
@@ -122,5 +172,7 @@ public class User {
         return this.email+" "+this.password;
 
     }
+
+
 
 }

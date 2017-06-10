@@ -90,6 +90,52 @@ public class Main {
     public static void resetPassword() {
 
         System.out.println("\nMot de passe oublié\n");
+        Verification verification = new Verification();
+        String email, new_password, new_password2;
+        Scanner scanner = new Scanner(System.in);
+        boolean result = false;
+
+        //Récupération de l'email
+        do {
+            System.out.println("\nVotre email : ");
+            email = scanner.nextLine();
+            result = verification.isValidEmail(email);
+            if(result == false) {
+                System.out.println("\nErreur merci de saisir une adresse email valide.");
+            }
+        } while(result == false);
+
+        result = false;
+
+        //Récupération du nouveau MDP
+        do {
+            System.out.println("\nVeuillez saisir votre mot de passe : ");
+            new_password = scanner.nextLine();
+            result = verification.isValidPassword(new_password);
+            if(result == false) {
+                System.out.println("\nErreur merci de saisir un mot de passe entre 8 et 25 caractères dont au moins 1 chiffre.");
+            } else {
+                System.out.println("\nVeuillez confirmer votre mot de passe : ");
+                new_password2 = scanner.nextLine();
+                if(new_password.equals(new_password2)) {
+                    result = true;
+                } else {
+                    System.out.println("\nErreur merci de saisir deux mots de passe identiques.");
+                    result = false;
+                }
+            }
+        } while(result == false);
+
+        User user = new User(email, "");
+
+        //UPDATE MDP
+        result = user.updatePassword(new_password);
+
+        if (result) {
+            System.out.println("\nLe mot de passe a été modifié.");
+        } else {
+            System.out.println("\nLe mot de passe n'a pas été modifié.");
+        }
 
     }
 
