@@ -68,10 +68,10 @@ public class User {
 
     }
 
-    public boolean insertIntoDB() {
+    public boolean insertIntoDB(String db_name) {
 
         String cryptedPassword = encryptPassword(this.password);
-        String url = "jdbc:mysql://localhost/test-driven";
+        String url = "jdbc:mysql://localhost/test-driven_db";
         String log = "root";
         String pass = "root";
         ResultSet res;
@@ -83,7 +83,7 @@ public class User {
             Class.forName("com.mysql.jdbc.Driver");
             connexion = DriverManager.getConnection(url, log, pass);
             statement = connexion.createStatement();
-            String request = "INSERT INTO user SET email = ? AND password = ?";
+            String request = "INSERT INTO user (email,password) VALUES('"+this.email+"','"+cryptedPassword+"')";
             prepare = connexion.prepareStatement(request);
             prepare.setString(1, this.email);
             prepare.setString(2, cryptedPassword);
