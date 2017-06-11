@@ -10,7 +10,15 @@ public class Connection implements Authentication {
     private Database db;
     private User user;
 
-    public void connect(String log, String pass) {
+    public Connection(){
+        this.db = Main.db;
+        connect();
+        isLogsValid();
+
+    }
+
+    public void connect() {
+
         System.out.println("\nConnexion\n");
         Verification verification = new Verification();
         Scanner scanner = new Scanner(System.in);
