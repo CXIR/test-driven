@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import java.sql.*;
+import java.sql.Connection;
 
 /**
  * Created by Hugo on 09/06/2017.
@@ -12,10 +13,6 @@ public class User {
 
     private String email;
     private String password;
-
-    public User() {
-
-    }
 
     public User(String email, String password) {
 
@@ -72,7 +69,7 @@ public class User {
         String cryptedPassword = encryptPassword(this.password);
         String url = "jdbc:mysql://localhost/test-driven";
         String log = "root";
-        String pass = "root";
+        String pass = "";
         ResultSet res;
         ResultSetMetaData count;
         Connection connexion = null;
@@ -115,6 +112,54 @@ public class User {
         }
         return false;
 
+    }
+
+    public boolean isUserValid(){
+        String cryptedPassword = encryptPassword(this.password);
+        String url = "jdbc:mysql://localhost/test-driven";
+        String log = "root";
+        String pass = "";
+        ResultSet res;
+        ResultSetMetaData count;
+        Connection connexion = null;
+        Statement statement = null;
+        PreparedStatement prepare = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connexion = DriverManager.getConnection(url, log, pass);
+            statement = connexion.createStatement();
+            String request = "SELECT user WHERE email = ? AND password = ?";
+            prepare = connexion.prepareStatement(request);
+            prepare.setString(1, this.email);
+            prepare.setString(2, cryptedPassword);
+            res = prepare.executeQuery();
+            res.next();
+            count = res.getMetaData();
+            if(count.getColumnCount() == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch(SQLException e) {
+            System.out.println();
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.out.println();
+            e.printStackTrace();
+        } finally {
+            try {
+                connexion.close();
+                prepare.close();
+                statement.close();
+            } catch (SQLException e) {
+                System.out.println();
+                e.printStackTrace();
+            } catch (NullPointerException e) {
+                System.out.println();
+                e.printStackTrace();
+            }
+        }
+        return false;
     }
 
     public String toString() {
