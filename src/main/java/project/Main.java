@@ -8,7 +8,7 @@ import java.util.*;
  */
 
 public class Main {
-    private static Database db;
+    public static Database db;
     public static void main(String[] args) {
         db = new Database("//localhost/test-driven", "root", "");
 
@@ -93,7 +93,7 @@ public class Main {
         }
     }
 
-    public static void logIn() {
+    /*public static void logIn() {
         System.out.println("\nConnexion\n");
         Verification verification = new Verification();
         Scanner scanner = new Scanner(System.in);
@@ -142,7 +142,7 @@ public class Main {
         else{
             System.out.println("\nErreur mysql veillez à lancer votre serveur et/ou installer le driver JDBC.\n");
         }
-    }
+    }*/
 
     public static void resetPassword() {
 

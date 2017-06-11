@@ -5,7 +5,7 @@ package project;
  * A utiliser pour les tests : Davy
  */
 public interface Authentication {
-    public void connect(String log, String pass);
+    public void connect();
 
     public boolean isLogsValid();
 }
