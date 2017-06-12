@@ -1,21 +1,21 @@
 package project;
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
- * Created by ludwigroger on 11/06/2017.
+ * Created by ludwigroger on 12/06/2017.
  */
 
-class VerificationTest {
+public class VerificationTest {
+
     @Test
-    void isValidEmail() {
+    public void isValidEmail() throws Exception {
 
     }
 
     @Test
-    void isValidPassword() {
+    public void isValidPassword() throws Exception {
 
     }
 

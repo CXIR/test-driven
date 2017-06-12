@@ -74,7 +74,7 @@ public class Main {
             }
         } while(result == false);
         User user = new User(email, password);
-        if(user.insertIntoDB()) {
+        if(user.insertIntoDB("test-driven_db")) {
             System.out.println("\nFélicitation vous êtes désormais inscrit(e) ! \n");
         } else {
             System.out.println("\nErreur mysql veillez à lancer votre serveur et/ou installer le driver JDBC.\n");
